@@ -1,0 +1,42 @@
+diff --git a/mmdet3d/__init__.py b/mmdet3d/__init__.py
+index 643c39c..246d10a 100644
+--- a/mmdet3d/__init__.py
++++ b/mmdet3d/__init__.py
+@@ -1,4 +1,13 @@
++# ------------------------------------------------------------------------
++# SpaceDrive
++# Copyright (c) 2026 Zhenghao Zhang. All Rights Reserved.
++# ------------------------------------------------------------------------
++# Modified from mmdetection3d
+ # Copyright (c) OpenMMLab. All rights reserved.
++# ------------------------------------------------------------------------
++
++# THIS IS SUPPOSED TO REPLACE ~/mmdetection3d/mmdet3d/__init__.py
++
+ import mmcv
+
+ import mmdet
+@@ -19,7 +28,7 @@ def digit_version(version_str):
+
+
+ mmcv_minimum_version = '1.5.2'
+-mmcv_maximum_version = '1.7.0'
++mmcv_maximum_version = '1.7.2'
+ mmcv_version = digit_version(mmcv.__version__)
+
+
+diff --git a/requirements/runtime.txt b/requirements/runtime.txt
+index 643cb0c..ba4b52b 100644
+--- a/requirements/runtime.txt
++++ b/requirements/runtime.txt
+@@ -1,6 +1,8 @@
+ lyft_dataset_sdk
+-networkx>=2.2,<2.3
+-numba==0.53.0
++# Match SpaceDrive docker/requirements.txt and Python 3.9.
++networkx>=2.5
++# Numba 0.53 only supports NumPy <1.21; SpaceDrive uses 1.23.4.
++numba==0.56.4
+ numpy
+ nuscenes-devkit
+ plyfile
