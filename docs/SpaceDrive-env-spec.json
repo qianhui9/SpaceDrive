@@ -1,0 +1,61 @@
+{
+  "name": "SpaceDrive",
+  "base": "python3.9.25+cuda11.8",
+  "system_pkgs": [
+    "git",
+    "taskset"
+  ],
+  "pip_phases": [
+    [
+      "torch==2.1.1+cu118",
+      "torchvision==0.16.1+cu118"
+    ],
+    [
+      "numpy==1.23.4",
+      "mmcv-full==1.7.2",
+      "mmdet==2.28.2",
+      "mmsegmentation==0.30.0"
+    ],
+    [
+      "transformers==4.52.1",
+      "peft==0.14.0",
+      "accelerate==1.7.0",
+      "open3d==0.19.0",
+      "numba==0.56.4",
+      "networkx==3.2.1"
+    ]
+  ],
+  "env": {
+    "TOKENIZERS_PARALLELISM": "false",
+    "HF_HUB_OFFLINE": "1"
+  },
+  "run_commands": [
+    "Reuse validated env; full constraints and installation patches: docs/environment_constraints.txt and docs/ENVIRONMENT_LOCAL.md",
+    "mmdetection3d editable v1.0.0rc6; UniDepth editable e60e9b4; use repository torch21_mmcv patches"
+  ],
+  "weight_dirs": {
+    "SpaceDrive-Qwen2.5-VL-7B": {
+      "path": "/data/qh/phdCode/work4/models/SpaceDrive/SpaceDrive-Qwen2.5-VL-7B",
+      "source": "user-provided complete iter_21096.pth",
+      "gated": false
+    }
+  },
+  "smoke": {
+    "import_names": [
+      "torch",
+      "mmcv",
+      "mmdet3d",
+      "transformers",
+      "unidepth"
+    ],
+    "gpu_tests": [
+      {
+        "cmd": "taskset -c 0-3,6-31 /home/qh/miniconda3/envs/SpaceDrive/bin/python -u /data/qh/phdCode/work4/SpaceDrive/tools/infer_checkpoint_smoke.py --checkpoint /data/qh/phdCode/work4/models/SpaceDrive/SpaceDrive-Qwen2.5-VL-7B/iter_21096.pth --data-root /data/qh/nuscenes/v1.0-trainval --assets /data/qh/phdCode/work4/SpaceDrive/outputs/qwen_inference_smoke_20261109_run01/assets --output-dir /data/qh/phdCode/work4/SpaceDrive/outputs/qwen_inference_smoke_20261109_run01/group3 --num-samples 3 > /data/qh/phdCode/work4/SpaceDrive/outputs/qwen_inference_smoke_20261109_run01/group3.log 2>&1",
+        "expect": "WITNESS [16, 16] NVIDIA GeForce RTX 3090"
+      }
+    ],
+    "cli_checks": [
+      "nvidia-smi"
+    ]
+  }
+}

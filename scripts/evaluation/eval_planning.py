@@ -186,7 +186,7 @@ def process_data(preds, start, end, key_infos, metric_dict, lock, pbar, planning
                 print('Token is skipped' )
             pbar.update(1)
         except Exception as e:
-            print(e)
+            print(f"EVALUATION_ERROR token={data.get('token', 'unknown')} error={e!r}", flush=True)
             pbar.update(1)
 
 
